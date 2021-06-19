@@ -78,7 +78,7 @@ for symbol in symbols:
     # Creating dataframe of breakout candidates
     after_opening_range_breakdown = after_opening_range_df[after_opening_range_df['close'] < opening_range_low]
     after_opening_range_breakdown_df = pd.DataFrame(after_opening_range_breakdown,
-                                                   columns=['open', 'high', 'low', 'close', 'volume'])
+                                                    columns=['open', 'high', 'low', 'close', 'volume'])
 
     if not after_opening_range_breakdown.empty:  # if we have breakout candidates
         if symbol not in existing_order_symbols:  # if we have not already bought a stock

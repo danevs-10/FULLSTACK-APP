@@ -11,6 +11,7 @@ from fastapi.templating import Jinja2Templates
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+
 @app.get("/")
 def index(request: Request):
     stock_filter = request.query_params.get('filter', False)  # Initialized to False
@@ -153,6 +154,7 @@ def apply_strategy(strategy_id: int = Form(...), stock_id: int = Form(...)):
 
     return RedirectResponse(url=f"/strategy/{strategy_id}", status_code=303)
 
+
 @app.get("/strategies")
 def strategies(request: Request):
     connection = sqlite3.connect(Config.DB_FILE)
@@ -164,11 +166,13 @@ def strategies(request: Request):
     strategies = cursor.fetchall()
     return templates.TemplateResponse("Strategies.html", {"request": request, "strategies": strategies})
 
+
 @app.get("/orders")
 def orders(request: Request):
     api = tradeapi.REST(Config.API_KEY, Config.SECRET_KEY, Config.API_URL, 'v2')  # added v2 to include updates.
     orders = api.list_orders(status='all')
     return templates.TemplateResponse("Orders.html", {"request": request, "orders": orders})
+
 
 @app.get("/strategy/{strategy_id}")
 def strategy(request: Request, strategy_id):
@@ -196,6 +200,7 @@ def strategy(request: Request, strategy_id):
     return templates.TemplateResponse("Strategy.html", {"request": request,
                                                         "stocks": stocks,
                                                         "strategy": strategy})
+
 
 if __name__ == '__main__':
     uvicorn.run(app, host="127.0.0.1", port=8000)
