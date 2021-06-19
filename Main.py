@@ -3,13 +3,13 @@
 import Config
 import sqlite3
 import alpaca_trade_api as tradeapi
+import uvicorn
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-
 
 @app.get("/")
 def index(request: Request):
@@ -196,3 +196,6 @@ def strategy(request: Request, strategy_id):
     return templates.TemplateResponse("Strategy.html", {"request": request,
                                                         "stocks": stocks,
                                                         "strategy": strategy})
+
+if __name__ == '__main__':
+    uvicorn.run(app, host="127.0.0.1", port=8000)

@@ -2,3 +2,4 @@
 __pycache__/
 app.db
 Config.py
+app.db-journal
